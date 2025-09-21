@@ -19,11 +19,7 @@ import java.time.LocalDateTime;
 @Slf4j
 @Service
 public class ResetPasswordService {
-    private final SesClient sesClient;
-    public ResetPasswordService(SesClient sesClient) {
-        this.sesClient = sesClient;
-    }
-    Dotenv dotenv = Dotenv.configure().load();
+
     @Autowired
     private UserRepository userRepository;
 
@@ -139,16 +135,7 @@ public class ResetPasswordService {
 
 
         Message message = Message.builder().subject(subjectContent).body(emailBody).build();
-
-
-        SendEmailRequest sendEmailRequest = SendEmailRequest.builder()
-                .source(dotenv.get("AWS_SES_VERIFIED_EMAIL"))
-                .destination(destination)
-                .message(message)
-                .build();
-
-
-        sesClient.sendEmail(sendEmailRequest);
+        emailUtil.sendEmail(destinationEmail, subject, emailBodyContent);
 
 
         log.info("Email sent successfully to {}", destinationEmail);
