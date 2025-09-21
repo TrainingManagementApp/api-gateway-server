@@ -1,0 +1,83 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: https://eureka-server-q5hz.onrender.com/
+  instance:
+    prefer-ip-address: true
+
+
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${RDS_HOSTNAME:dpg-d37q6qur433s73ev914g-a}:${RDS_PORT:5432}/${RDS_DB_NAME:skillbuilders}
+    username: ${RDS_USERNAME:skillbuilders_user}
+    password: ${RDS_PASSWORD:7IsL5XlgtSUYpz1U7u3ADPU5HzW57YXl}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: student-service
+            uri:
+              lb://student-service
+            predicates:
+              - Path=/student/**
+
+          - id: admin-service
+            uri:
+              lb://admin-service
+            predicates:
+              - Path=/admin/**
+
+          - id: trainer-service
+            uri:
+              lb://trainer-service
+            predicates:
+              - Path=/trainer/**
+
+          - id: manager-service
+            uri:
+              lb://manager-service
+            predicates:
+              - Path=/manager/**
+
+          - id: maintainer-service
+            uri:
+              lb://maintainer-service
+            predicates:
+              - Path=/maintainer/**
+#
+#          - id: finance-app-income
+#            uri:
+#              lb://manager-service
+#            predicates:
+#              - Path=/manager/**
+#
+#
+#          - id: trainer-service
+#            uri:
+#              lb://trainer-service
+#            predicates:
+#              - Path=/trainer/**
+#
+#          - id: student-service
+#            uri:
+#              lb://student-service
+#            predicates:
+#              - Path=/student/**
+#
+#
+#          - id: maintainer-service
+#            uri:
+#              lb://maintainer-service
+#            predicates:
+#              - Path=/maintainer/**
+#
