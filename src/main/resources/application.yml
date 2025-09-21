@@ -1,7 +1,7 @@
 eureka:
   client:
     service-url:
-      defaultZone: https://eureka-server-q5hz.onrender.com/
+      defaultZone: https://eureka-server-q5hz.onrender.com/eureka/
   instance:
     prefer-ip-address: true
 
